@@ -4,35 +4,37 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#define LENGTH 50
 
 /*
- * Main : takes void.
+ * main : Start of the program.
  *
- * Returns 0 here.
+ * Return: 0 on success.
 */
 
 int main(void)
 {
-	char input;
+	char input[LENGTH];
+	pid_t Mypid = fork();
 
-	prinf("shell$")
+	printf("shell$");
 	fflush(stdout);
 	if (fgets(input, sizeof(input), stdin) == NULL)
 	{
-		printf("\n")
-		break;
+		printf("\n");
 	}
-	input[strpsn(input, "\n")] = "\0";
-	pid_t Mypid = fork();
+	input[strspn(input, "\n")] = '\0';
 
 	if (Mypid == -1)
 	{
-		perror("fork")
+		perror("fork");
 		exit(EXIT_FAILURE);
 	}
 	else if (Mypid == 0)
 	{
-		char *argk[] = {input, NULL};
+		char *argk[2];
+		argk[0] = input;
+		argk[1] = NULL;
 		execve(input, argk, NULL);
 
 		perror("execve");
@@ -43,10 +45,10 @@ int main(void)
 		int Parent;
 		waitpid(Mypid, &Parent, 0);
 
-		if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
+		if (WIFEXITED(Parent) && WEXITSTATUS(Parent) != 0)
 			printf("Sorry: Command failed\n");
 	}
-	print ("Exit shell\n");
+	printf ("Exit shell\n");
 	return (0);
 }
 

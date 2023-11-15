@@ -4,13 +4,13 @@
 #define MAX_LENGTH 20
 
 /**
- * main - function takes input values and performs an operation.
+ * equate - function takes input values and performs an operation.
  * @argc: Number of command-line arguments..
  * @argv: an array of input values.
  *
  * Return: 0 on successful execution
  */
-int main(int argc, char *argv[])
+int equate(int argc, char *argv[])
 {
 	char getinput[MAX_LENGTH];
 	int sum;
