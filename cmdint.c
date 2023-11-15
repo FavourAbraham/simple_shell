@@ -5,20 +5,26 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-int main()
+/*
+ * Main : takes void.
+ *
+ * Returns 0 here.
+*/
+
+int main(void)
 {
 	char input;
 
 	prinf("shell$")
 	fflush(stdout);
-	if(fgets(input, sizeof(input), stdin) == NULL)
+	if (fgets(input, sizeof(input), stdin) == NULL)
 	{
 		printf("\n")
 		break;
 	}
 	input[strpsn(input, "\n")] = "\0";
-	
 	pid_t Mypid = fork();
+
 	if (Mypid == -1)
 	{
 		perror("fork")
@@ -28,10 +34,11 @@ int main()
 	{
 		char *argk[] = {input, NULL};
 		execve(input, argk, NULL);
+
 		perror("execve");
 		_exit(EXIT_FAILURE);
 	}
-	else 
+	else
 	{
 		int Parent;
 		waitpid(Mypid, &Parent, 0);
