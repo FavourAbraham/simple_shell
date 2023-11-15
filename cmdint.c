@@ -40,6 +40,6 @@ int main()
 			printf("Sorry: Command failed\n");
 	}
 	print ("Exit shell\n");
-
+	return (0);
 }
 
