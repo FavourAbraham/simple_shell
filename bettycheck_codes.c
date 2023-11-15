@@ -1,5 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
+#define MAX_LENGTH 20
 
 /**
  * main - function takes input values and performs an operation.
@@ -10,19 +12,24 @@
  */
 int main(int argc, char *argv[])
 {
-	sum = 0, m, subtract = 1;
-	getinput = getchar();
-	printf("choose your operation: " - " or " + ": \n");
+	char getinput[MAX_LENGTH];
+	int sum;
+	int m;
+	int subtract;
+	sum = 0;
+	subtract = 1;
+	getinput[0] = getchar();
+	printf("choose your operation: %c or %c:\n", '+', '-');
 	if (argc > 1)
 	for (m = 1; m < argc; m++)
 	{
 		sum += atoi(argv[m]);
 		subtract -= atoi(argv[m]);
 	}
-	if (getinput ==  "-")
-		Printf("subtraction of the numbers: %d\n", subtract)
+	if (strcmp(getinput, "-") == 0)
+		printf("subtraction of the numbers: %d\n", subtract);
 	else
-		Printf("sum of the numbers is: %d\n", sum)
+		printf("sum of the numbers is: %d\n", sum);
 
 	return (0);
 }
