@@ -16,6 +16,7 @@ int main(int argc, char *argv[])
 	int sum;
 	int m;
 	int subtract;
+
 	sum = 0;
 	subtract = 1;
 	getinput[0] = getchar();
