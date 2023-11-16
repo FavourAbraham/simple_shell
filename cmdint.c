@@ -4,51 +4,77 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-#define LENGTH 50
 
 /*
- * main : Start of the program.
+ * main: The main Proram.
  *
- * Return: 0 on success.
-*/
+ * execute_input: It executes command.
+ *
+ * display_mypromt: Displays promt.
+ *
+ *
+ */
 
-int main(void)
+void display_mypromt(void)
 {
-	char input[LENGTH];
-	pid_t Mypid = fork();
-
-	printf("shell$");
+	printf("Oursimple_shell#");
 	fflush(stdout);
-	if (fgets(input, sizeof(input), stdin) == NULL)
-	{
-		printf("\n");
-	}
-	input[strspn(input, "\n")] = '\0';
+}
 
-	if (Mypid == -1)
+int execute_input(char *input)
+{
+	pid_t pid;
+	int parent;
+
+	pid = fork();
+
+	if  (pid == 0)
 	{
-		perror("fork");
-		exit(EXIT_FAILURE);
-	}
-	else if (Mypid == 0)
-	{
-		char *argk[2];
+		char *argk[] = {NULL, NULL};
 		argk[0] = input;
-		argk[1] = NULL;
-		execve(input, argk, NULL);
 
-		perror("execve");
-		_exit(EXIT_FAILURE);
+		if (execve(input, argk, NULL) == -1)
+		{
+			perror("failed_input");
+			_exit(EXIT_FAILURE);
+		}
 	}
+	else if (pid < 0)
+		perror("shell_failed");
 	else
 	{
-		int Parent;
-		waitpid(Mypid, &Parent, 0);
-
-		if (WIFEXITED(Parent) && WEXITSTATUS(Parent) != 0)
-			printf("Sorry: Command failed\n");
+	do {	pid = waitpid(pid, &parent, WUNTRACED);
+	} while (!WIFEXITED(parent) && !WIFSIGNALED(parent));
 	}
-	printf ("Exit shell\n");
+	return (1);
+}
+int main(void)
+{
+	char *input = NULL;
+	size_t lon = 0;
+	ssize_t read;
+
+	while (1)
+	{
+		display_mypromt();
+		read = getline(&input, &lon, stdin);
+
+		if (read == -1)
+		{
+			printf("\n");
+			free(input);
+			exit(EXIT_SUCCESS);
+		}
+		else if (read > 1)
+		{
+			input[read - 1] = '\0';
+
+		if (execute_input(input) == 0)
+			break;
+		}
+	}
+
+	free(input);
 	return (0);
 }
 
