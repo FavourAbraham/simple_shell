@@ -5,21 +5,19 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-/*
- * main: The main Proram.
- *
- * execute_input: It executes command.
- *
- * display_mypromt: Displays promt.
- *
- *
- */
-
-void display_mypromt(void)
+void display_mypromt(void) /*display_mypromt: Displays promt.*/
 {
 	printf("Oursimple_shell#");
 	fflush(stdout);
 }
+
+/**
+ * execute__input - Executes commands
+ *
+ * @input: Takes command
+ *
+ * Returns: Always 1 in execution
+**/
 
 int execute_input(char *input)
 {
@@ -31,6 +29,7 @@ int execute_input(char *input)
 	if  (pid == 0)
 	{
 		char *argk[] = {NULL, NULL};
+
 		argk[0] = input;
 
 		if (execve(input, argk, NULL) == -1)
@@ -48,6 +47,13 @@ int execute_input(char *input)
 	}
 	return (1);
 }
+
+/**
+ * main: The main program that
+ *
+ * Return: 0 after executing
+**/
+
 int main(void)
 {
 	char *input = NULL;
