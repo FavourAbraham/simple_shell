@@ -5,18 +5,23 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-void display_mypromt(void) /*display_mypromt: Displays promt.*/
+/**
+ * display_mypromt - Displays the prompt.
+ *
+**/
+
+void display_mypromt(void)
 {
 	printf("Oursimple_shell#");
 	fflush(stdout);
 }
 
 /**
- * execute__input - Executes commands
+ * execute_input - Executes commands
  *
  * @input: Takes command
  *
- * Returns: Always 1 in execution
+ * Return: 1 in execution
 **/
 
 int execute_input(char *input)
@@ -49,12 +54,12 @@ int execute_input(char *input)
 }
 
 /**
- * main: The main program that
+ * main -  Execute command, reads command and prints new line.
  *
  * Return: 0 after executing
 **/
 
-int main(void)
+int main(void) /* Entry point*/
 {
 	char *input = NULL;
 	size_t lon = 0;
